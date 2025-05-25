@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520" width="500" height="500">
+  <style>
+    .line {
+      stroke-width: 2;
+      fill: none;
+      transition: stroke-width 0.2s ease;
+    }
+    .line:hover {
+      stroke-width: 4;
+    }
+    .us-line { stroke: crimson; }
+    .canada-line { stroke: navy; }
+    .mexico-line { stroke: seagreen; }
+    .avg-line {
+      stroke: gray;
+      stroke-dasharray: 5;
+    }
+    .label {
+      font-size: 15px;
+      font-family: sans-serif;
+    }
+  </style>
+
+  <!-- title -->
+  <text x="260" y="25" text-anchor="middle" font-size="20" font-family="sans-serif">Life Expectancy in North America (1960–2022)</text>
+
+  <!-- legen -->
+  <rect x="290" y="35" width="200" height="65" fill="white" stroke="black" />
+  <text x="390" y="50" font-size="11" fill="gray" text-anchor="middle"> - - - universal average</text>
+  <text x="390" y="65" font-size="11" fill="seagreen" text-anchor="middle">━ Mexico</text>
+  <text x="390" y="80" font-size="11" fill="navy" text-anchor="middle">━ Canada</text>
+  <text x="390" y="95" font-size="11" fill="crimson" text-anchor="middle">━ United States</text>
+
+  <!-- axes -->
+  <line x1="30" y1="450" x2="510" y2="450" stroke="black" />
+  <line x1="60" y1="50" x2="60" y2="450" stroke="black" />
+
+
+  <!-- axes labels -->
+  <text x="20" y="250" transform="rotate(-90, 20, 250)" font-size="15" text-anchor="middle">Life Expectancy (years)</text>
+  <text x="260" y="495" font-size="15" text-anchor="middle">Year</text>
+
+  <!-- y ax -->
+  {% for val in range(55, 90, 5) %}
+  <line x1="60" x2="510" y1="{{ 450 - ((73.4 - 55) * (400 / 35)) }}" y2="{{ 450 - ((73.4 - 55) * (400 / 35)) }}" stroke="gray" stroke-dasharray="5,5" stroke-width="2" />
+    {% set y = 450 - ((val - 55) * (400 / 35)) %}
+    <line x1="55" x2="60" y1="{{ y }}" y2="{{ y }}" stroke="black" />
+    <text x="50" y="{{ y + 10 }}" class="label" text-anchor="end">{{ val }}</text>
+  {% endfor %}
+
+  <!-- x ax -->
+  {% for year_label in years %}
+    {% if (year_label|int) % 10 == 0 %}
+      {% set x = 60 + loop.index0 * 7 %}
+      <line x1="{{ x }}" x2="{{ x }}" y1="450" y2="455" stroke="black" />
+      <text x="{{ x }}" y="470" class="label" text-anchor="middle">{{ year_label }}</text>
+    {% endif %}
+  {% endfor %}
+
+  <!-- US -->
+  <g class="line us-line">
+    {% for point in usa_endpoints %}
+      <line
+        x1="{{ 60 + loop.index0 * 7 }}"
+        y1="{{ 450 - ((point[0] - 55) * (400 / 30)) }}"
+        x2="{{ 60 + (loop.index0 + 1) * 7 }}"
+        y2="{{ 450 - ((point[1] - 55) * (400 / 30)) }}" />
+    {% endfor %}
+  </g>
+
+  <!-- Canada -->
+  <g class="line canada-line">
+    {% for point in canada_endpoints %}
+      <line
+        x1="{{ 60 + loop.index0 * 7 }}"
+        y1="{{ 450 - ((point[0] - 55) * (400 / 30)) }}"
+        x2="{{ 60 + (loop.index0 + 1) * 7 }}"
+        y2="{{ 450 - ((point[1] - 55) * (400 / 30)) }}" />
+    {% endfor %}
+  </g>
+
+  <!-- Mx -->
+  <g class="line mexico-line">
+    {% for point in mexico_endpoints %}
+      <line
+        x1="{{ 60 + loop.index0 * 7 }}"
+        y1="{{ 450 - ((point[0] - 55) * (400 / 30)) }}"
+        x2="{{ 60 + (loop.index0 + 1) * 7 }}"
+        y2="{{ 450 - ((point[1] - 55) * (400 / 30)) }}" />
+    {% endfor %}
+  </g>
+
+  <!-- Mean -->
+  <g class="line avg-line">
+    {% for point in universal_endpoints %}
+      <line
+        x1="{{ 60 + loop.index0 * 7 }}"
+        y1="{{ 450 - ((point[0] - 55) * (400 / 30)) }}"
+        x2="{{ 60 + (loop.index0 + 1) * 7 }}"
+        y2="{{ 450 - ((point[1] - 55) * (400 / 30)) }}" />
+    {% endfor %}
+  </g>
+</svg>
+
+
+

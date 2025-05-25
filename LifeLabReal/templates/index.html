@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Life Expectancy Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto Slab', serif;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>North American Life Expectancy — Riya Undavia</h1>
+
+  <!-- add line grpah -->
+  <section>
+    {% include 'line_graph.svg' %}
+  </section>
+
+  <!-- dropdown -->
+  <section>
+    <form action="/year" method="get">
+      <label for="year">Select a year:</label><br>
+      <select name="year" id="year">
+
+      </select>
+      <button type="submit">Explore Year</button>
+    </form>
+
+    <script>
+      const yearSelect = document.getElementById("year");
+      for (let y = 1960; y <= 2020; y++) {
+        const opt = document.createElement("option");
+        opt.value = y;
+        opt.textContent = y;
+        yearSelect.appendChild(opt);
+      }
+    </script>
+  </section>
+
+  <footer>
+    <p>Data from <a href="https://data.worldbank.org/indicator/SP.DYN.LE00.IN?locations=MX-US-CA" target="_blank">The World Bank</a></p>
+  </footer>
+
+</body>
+</html>
