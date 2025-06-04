@@ -7,9 +7,9 @@ output_file = "data/life_expectancy.json"
 
 
 rename_map = {
-    "Canada": "Mexico",
-    "Mexico": "USA",
-    "United States": "Canada"
+    "Canada": "Canada",
+    "Mexico": "Mexico",
+    "United States": "USA"
 }
 
 #CSV Stuff
